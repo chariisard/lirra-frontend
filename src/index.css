@@ -1,31 +1,35 @@
 body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Work Sans';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  height: 100%;
+ margin: 0;
+ padding: 0;
+ font-family: "Work Sans";
+ -webkit-font-smoothing: antialiased;
+ -moz-osx-font-smoothing: grayscale;
+ height: 100%;
 }
 
 code {
-  font-family: 'Work Sans';
+ font-family: "Work Sans";
 }
 
 .App {
-  height: 100vh;
+ height: 100vh;
 }
 
 .Home {
-  height: 100vh;
-  background-color: #1D2C44;
+ height: 100vh;
+ background-color: #1d2c44;
 }
 
 .Recommend {
-  height: 100vh;
-  background-color: #1D2C44;
+ height: 100vh;
+ background-color: #1d2c44;
 }
 
 .Reco {
-  height: 100vh;
-  background-color: #1D2C44;
+ height: 100vh;
+ background-color: #1d2c44;
+}
+
+.capitalize {
+ text-transform: capitalize;
 }

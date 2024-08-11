@@ -16,40 +16,55 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 import { Link } from "react-router-dom";
-import { apiRequest } from "../api";
+import { apiRequest } from "../utilities";
 
 const SignUp = () => {
  const theme = useTheme();
  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
- const [showPassword, setShowPassword] = React.useState(false);
+ const [showPassword, setShowPassword] = useState(false);
  const [firstName, setFirstName] = useState("");
  const [lastName, setLastName] = useState("");
  const [userName, setUserName] = useState("");
  const [userPassword, setUserPassword] = useState("");
  const [userType, setUserType] = useState("");
+ const [userDBTypes, setUserDBTypes] = useState([]);
 
- const types = [
-  {
-   value: "librarian",
-   label: "Librarian",
-  },
-  {
-   value: "student",
-   label: "Student",
-  },
-  {
-   value: "teacher",
-   label: "Teacher",
-  },
- ];
-
- const handleClickShowPassword = () => setShowPassword((show) => !show);
+ const handleClickShowPassword = () => {
+  setShowPassword((show) => !show);
+ };
 
  const handleMouseDownPassword = (event) => {
   event.preventDefault();
  };
 
- useEffect(() => {}, []);
+ const handleSignUp = async () => {
+  const body = {
+   first_name: firstName,
+   last_name: lastName,
+   user_username: userName,
+   user_password: userPassword,
+   user_type_id: userType,
+  };
+  await apiRequest({
+   url: "api/user",
+   method: "POST",
+   body,
+  });
+ };
+
+ useEffect(() => {
+  (async () => {
+   const result = await apiRequest({
+    url: "api/user-types",
+   });
+   setUserDBTypes(() => {
+    return result.data.response.map((type) => ({
+     value: type.user_type_id,
+     label: type.user_type,
+    }));
+   });
+  })();
+ }, []);
 
  return (
   <Container
@@ -205,6 +220,7 @@ const SignUp = () => {
       User Type
      </InputLabel>
      <TextField
+      className="capitalize"
       select
       fullWidth
       displayEmpty
@@ -220,11 +236,16 @@ const SignUp = () => {
       <MenuItem value="" disabled>
        Select User Type
       </MenuItem>
-      {types.map((option) => (
-       <MenuItem key={option.value} value={option.value}>
-        {option.label}
-       </MenuItem>
-      ))}
+      {userDBTypes.length > 0 &&
+       userDBTypes.map((option) => (
+        <MenuItem
+         key={option.value}
+         value={option.value}
+         className="capitalize"
+        >
+         {`${option.label}`}
+        </MenuItem>
+       ))}
      </TextField>
 
      <Stack
@@ -262,6 +283,7 @@ const SignUp = () => {
        py: 2,
        width: "100%",
       }}
+      onClick={handleSignUp}
      >
       Sign Up
      </Button>
