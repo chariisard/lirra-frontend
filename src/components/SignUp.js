@@ -15,10 +15,16 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
 import { Link } from 'react-router-dom';
+import { useState } from "react";
 
 const SignUp = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const [showPassword, setShowPassword] = React.useState(false);
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [userName, setUserName] = useState("");
+    const [userPassword, setUserPassword] = useState("");
 
     const types = [
         {
@@ -34,8 +40,6 @@ const SignUp = () => {
             label: 'Teacher',
         }
     ];
-
-    const [showPassword, setShowPassword] = React.useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -90,6 +94,7 @@ const SignUp = () => {
                                         borderRadius: "10px",
                                     }
                                 }}
+                                onChange={(e) => setFirstName(e.target.value)}
                             />
                         </Stack>
                         <Stack sx={{ flex: 1 }}>
@@ -111,6 +116,7 @@ const SignUp = () => {
                                         borderRadius: "10px",
                                     }
                                 }}
+                                onChange={(e) => setLastName(e.target.value)}
                             />
                         </Stack>
                     </Stack>
@@ -132,6 +138,7 @@ const SignUp = () => {
                                 borderRadius: "10px",
                             }
                         }}
+                        onChange={(e) => setUserName(e.target.value)}
                     />
 
                     <InputLabel htmlFor="Password" sx={{
@@ -165,6 +172,7 @@ const SignUp = () => {
                                 </InputAdornment>
                             )
                         }}
+                        onChange={(e) => setUserPassword(e.target.value)}
                     />
 
                     <InputLabel htmlFor="UserType" sx={{
