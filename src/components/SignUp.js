@@ -16,6 +16,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 import { Link } from "react-router-dom";
+import { apiRequest } from "../api";
 
 const SignUp = () => {
  const theme = useTheme();
@@ -25,6 +26,7 @@ const SignUp = () => {
  const [lastName, setLastName] = useState("");
  const [userName, setUserName] = useState("");
  const [userPassword, setUserPassword] = useState("");
+ const [userType, setUserType] = useState("");
 
  const types = [
   {
@@ -213,6 +215,7 @@ const SignUp = () => {
         backgroundColor: "#F5F5F5",
        },
       }}
+      onChange={(e) => setUserType(e.target.value)}
      >
       <MenuItem value="" disabled>
        Select User Type

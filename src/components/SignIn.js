@@ -1,4 +1,4 @@
-import React from 'react';
+import {React, useState} from 'react';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -15,6 +15,8 @@ import { Link } from 'react-router-dom';
 
 const SignIn = () => {
     const [showPassword, setShowPassword] = React.useState(false);
+    const [userName, setUserName] = useState("");
+    const [userPassword, setUserPassword] = useState("");
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -61,7 +63,8 @@ const SignIn = () => {
                             style: {
                                 borderRadius: "10px",
                             }
-                        }} 
+                        }}
+                        onChange={(e) => setUserName(e.target.value)}
                     />
 
                     <InputLabel htmlFor="component-simple" sx={{
@@ -94,6 +97,7 @@ const SignIn = () => {
                                 </InputAdornment>
                             )
                         }}
+                        onChange={(e) => setUserPassword(e.target.value)}
                     />
                     <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2} sx={{
                         mt: 3,
