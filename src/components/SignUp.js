@@ -45,6 +45,11 @@ const SignUp = () => {
    user_password: userPassword,
    user_type_id: userType,
   };
+  for (let key in body) {
+   if (!body[key]) {
+    return;
+   }
+  }
   await apiRequest({
    url: "api/user",
    method: "POST",
@@ -57,12 +62,14 @@ const SignUp = () => {
    const result = await apiRequest({
     url: "api/user-types",
    });
-   setUserDBTypes(() => {
-    return result.data.response.map((type) => ({
-     value: type.user_type_id,
-     label: type.user_type,
-    }));
-   });
+   if (result.data && result.data.response) {
+    setUserDBTypes(() => {
+     return result.data.response.map((type) => ({
+      value: type.user_type_id,
+      label: type.user_type,
+     }));
+    });
+   }
   })();
  }, []);
 

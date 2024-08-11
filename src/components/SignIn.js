@@ -15,13 +15,11 @@ import IconButton from "@mui/material/IconButton";
 import { Link } from "react-router-dom";
 import { apiRequest, setLocalStorage } from "../utilities";
 import { jwtDecode } from "jwt-decode";
-import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
  const [showPassword, setShowPassword] = useState(false);
  const [userName, setUserName] = useState("");
  const [userPassword, setUserPassword] = useState("");
- const navigate = useNavigate();
 
  const handleClickShowPassword = () => {
   setShowPassword((show) => !show);
@@ -36,19 +34,24 @@ const SignIn = () => {
    user_username: userName,
    user_password: userPassword,
   };
-  if (body.user_password.length <= 0 || body.user_username <= 0) {
-   return;
+  for (let key in body) {
+   if (!body[key]) {
+    return;
+   }
   }
   const result = await apiRequest({
    url: "api/user/auth",
    method: "POST",
    body,
   });
-  if (result.data.response.access_token) {
+
+  if (result.data && result.data.response) {
    setLocalStorage(
     "user",
     JSON.stringify(jwtDecode(result.data.response.access_token))
    );
+  } else if (result.errorMessage) {
+   alert(result.errorMessage);
   }
  };
 

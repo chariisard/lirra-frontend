@@ -22,10 +22,12 @@ const apiRequest = async ({ url, method = "GET", body = null }) => {
    },
    ...(body && { data: body }),
   };
-  const response = await axios(options);
-  return response;
+  const result = await axios(options);
+  return result;
  } catch (e) {
-  throw e.response ? e.response.data : e;
+  return {
+   errorMessage: e.response.data.response,
+  };
  }
 };
 
